@@ -22,13 +22,14 @@ module.exports = Command.extend({
       fs.statSync(configPath)
       browse(lastVersion())
     } catch (err) {
+      console.warn(err)
       console.log('Project must be initiated first, run `ipscend init`')
     }
 
     function lastVersion () {
       var config = JSON.parse(fs.readFileSync(configPath))
       if (config.versions.length === 0) {
-        console.log('You need to publish at least once with <ipscend publish>')
+        console.log('You need to publish at least once with `ipscend publish`')
         return
       }
       return config.versions[config.versions.length - 1].hash

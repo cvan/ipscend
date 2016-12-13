@@ -3,19 +3,19 @@ ipscend
 
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://ipn.io) [![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](http://webchat.freenode.net/?channels=%23ipfs) ![](https://img.shields.io/badge/coverage-%3F-yellow.svg?style=flat-square) [![Dependency Status](https://david-dm.org/diasdavid/ipscend.svg?style=flat-square)](https://david-dm.org/diasdavid/ipscend) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
 
-> Web Application publishing, simple and distributed with IPFS 
+> Web Application publishing, simple and distributed with IPFS
 
 ## Usage
 
-Install via npm
+Install via npm:
 
-```
+```sh
 $ npm install ipscend --global
 ```
 
-Run the CLI to show the available commands
+Run the CLI to show the available commands:
 
-```
+```sh
 $ ipscend
 Usage: ipscend COMMAND [OPTIONS]
 
@@ -70,7 +70,7 @@ Prints out the published versions for the app and its respective timestamp.
 
 ## Use IPFS to host your webpage using a standard domain (includes cool DNS trick!)
 
-If you are looking into having your application accesible through `youdomain.com`, instead of referencing it by a `/ipfs/hash`, we have a solution for you.
+If you are looking into having your application accessible through `youdomain.com`, instead of referencing it by a `/ipfs/hash`, we have a solution for you.
 
 Every IPFS node HTTP interface checks the host header when it receives a request from a browser, then it performs a DNS lookup for a TXT Record, looks if there is any MerkleLink available, and, if there is, it performs a lookup, caching that path and serving it as if it was a static webserver.
 
@@ -78,8 +78,8 @@ To make this work, simply:
 
 1. Publish your application using `ipscend publish`.
 2. Save the returned hash.
-3. Find the IPFS ip addresses using `$ dig ipfs.io`. Example: 
-	
+3. Find the IPFS ip addresses using `$ dig ipfs.io`. Example:
+
 	```sh
 	$ dig +short ipfs.io
 	178.62.61.185
@@ -87,7 +87,7 @@ To make this work, simply:
 	104.236.76.40
 	...
 	```
-4. Decide which domain or subdomain will host your IPFS application. We're going to use `ipfs.yourdomain.com`
+4. Decide which domain or subdomain will host your IPFS application. We're going to use `ipfs.yourdomain.com`.
 5. In the DNS administration for your domain, add an A record for each of the ipfs.io IPs addresses. Example:
 	```
 	yourdomain.com
@@ -120,11 +120,11 @@ Voilá, your page is now cached and is being served by IPFS.
 
 **Note: You can also host your own IPFS nodes and use the same DNS trick.**
 
-### Automate the DNS TXT Record update with `dnslink` tool
+### Automate the DNS TXT Record update with the `dnslink` tool
 
 `dnslink-deploy` is a simple tool that lets you update your TXT records to the latest hash, if you happen to be using Digital Ocean's nameservers. To update it using the tool, simply run:
 
-```
+```sh
 dnslink-deploy -d yourDomain -r @ -p /ipfs/QmeQT76CZLBhSxsLfSMyQjKn74UZski4iQSq9bW7YZy6x8
 ```
 

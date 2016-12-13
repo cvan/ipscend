@@ -1,11 +1,11 @@
 'use strict'
 
+const fs = require('fs')
+const path = require('path')
+
+const browserSync = require('browser-sync')
 var Command = require('ronin').Command
-var fs = require('fs')
-var path = require('path')
-var open = require('open')
-var ns = require('node-static')
-var http = require('http')
+const open = require('open')
 
 module.exports = Command.extend({
   desc: 'Preview your application before you publish it',
@@ -24,22 +24,24 @@ module.exports = Command.extend({
       fs.statSync(configPath)
       preview()
     } catch (err) {
-      console.log(err)
+      console.warn(err)
       console.log('Project must be initiated first, run `ipscend init`')
     }
 
     function preview () {
-      var config = JSON.parse(fs.readFileSync(configPath))
+      let config = JSON.parse(fs.readFileSync(configPath))
 
-      var file = new ns.Server(config.path)
+      let bsConfig = Object.assign({}, {
+        server: './',
+        files: '**/*',
+        notify: false,
+        open: true,
+        tunnel: true,
+        host: '0.0.0.0',
+        port: parseInt(port, 10) || 8000
+      }, config.browsersync)
 
-      http.createServer(function (request, response) {
-        request.addListener('end', function () {
-          file.serve(request, response)
-        }).resume()
-      }).listen(parseInt(port, 10) || 8000, function () {
-        open('http://localhost:' + (parseInt(port, 10) || 8000))
-      })
+      browserSync(bsConfig)
     }
   }
 })

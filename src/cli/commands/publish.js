@@ -1,9 +1,10 @@
 'use strict'
 
-const Command = require('ronin').Command
 const fs = require('fs')
-const ipfsAPI = require('ipfs-api')
 const path = require('path')
+
+const Command = require('ronin').Command
+const ipfsAPI = require('ipfs-api')
 
 module.exports = Command.extend({
   desc: 'Publish your project',
@@ -15,6 +16,7 @@ module.exports = Command.extend({
       fs.statSync(configPath)
       publish()
     } catch (err) {
+      console.warn(err)
       console.log('Project must be initiated first, run `ipscend init`')
     }
 
@@ -39,7 +41,9 @@ module.exports = Command.extend({
         })[0]
 
         if (duplicate) {
-          console.log('This version (' + duplicate.hash + ') has already been published on:', duplicate.timestamp)
+          console.log('This version "%s" has already been published on "%s"',
+            duplicate.hash,
+            duplicate.timestamp)
           return
         }
 
@@ -48,7 +52,7 @@ module.exports = Command.extend({
           timestamp: new Date()
         }
 
-        console.log('Published', config.path, 'with the following hash:', version.hash)
+        console.log('Published %s with the following hash:', config.path, version.hash)
         console.log('You can access it through your local node or through a public IPFS gateway:')
         console.log('http://localhost:8080/ipfs/' + version.hash)
         console.log('http://ipfs.io/ipfs/' + version.hash)

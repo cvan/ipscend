@@ -1,11 +1,12 @@
 'use strict'
 
-var Command = require('ronin').Command
 var fs = require('fs')
 var path = require('path')
-var webshot = require('webshot')
+
+var Command = require('ronin').Command
 var ipfsAPI = require('ipfs-api')
 var open = require('open')
+var webshot = require('webshot')
 
 module.exports = Command.extend({
   desc: 'View or generate screenshots for your application',
@@ -21,14 +22,14 @@ module.exports = Command.extend({
       fs.statSync(configPath)
       snapshot()
     } catch (err) {
-      // console.log(err)
+      console.warn(err)
       console.log('Project must be initiated first, run `ipscend init`')
     }
 
     function snapshot () {
       var config = JSON.parse(fs.readFileSync(configPath))
       if (config.versions.length === 0) {
-        return console.log('You need to publish at least once with <ipscend publish>')
+        return console.log('You need to publish at least once with `ipscend publish`')
       }
 
       var ipfs = ipfsAPI('localhost', '5001')

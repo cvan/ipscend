@@ -1,8 +1,9 @@
 'use strict'
 
+const fs = require('fs')
+const path = require('path')
+
 var Command = require('ronin').Command
-var fs = require('fs')
-var path = require('path')
 
 module.exports = Command.extend({
   desc: 'Check each version published',
@@ -14,11 +15,13 @@ module.exports = Command.extend({
       fs.statSync(configPath)
       publish()
     } catch (err) {
+      console.warn(err)
       console.log('Project must be initiated first, run `ipscend init`')
     }
 
     function publish () {
       var config = JSON.parse(fs.readFileSync(configPath))
+      config.versions = config.versions || []
       config.versions.forEach(function (version) {
         console.log(version.timestamp, version.hash)
       })

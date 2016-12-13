@@ -1,7 +1,7 @@
 {
   "name": "ipscend",
   "version": "0.4.1",
-  "description": "Web Application publishing, simple and distributed with IPFS ",
+  "description": "Web Application publishing, simple and distributed with IPFS",
   "bin": {
     "ipscend": "src/cli/bin.js"
   },
@@ -32,10 +32,11 @@
   "homepage": "https://github.com/diasdavid/ipscend",
   "dependencies": {
     "asking": "^0.1.2",
+    "async": "^2.1.4",
+    "browser-sync": "^2.18.5",
     "ipfs-api": "^12.0.3",
     "ipfsd-ctl": "^0.17.0",
     "ndjson-aggregator": "^0.1.2",
-    "node-static": "^0.7.9",
     "open": "0.0.5",
     "ronin": "^0.3.11",
     "webshot": "^0.18.0"
